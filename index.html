@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Euijin Lee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=M+PLUS+Rounded+1c:wght@400;700&family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff;--surface:#fff;--ink:#000;--sub:#000;--line:#000;--accent:#000;--onaccent:#fff;
+--bar:56px}
+html[lang=ko]{--font:"Nanum Gothic",sans-serif}
+html[lang=ja]{--font:"M PLUS Rounded 1c",sans-serif}
+html[lang=en]{--font:"Montserrat",sans-serif}
+:root[data-theme=dark]{--bg:#000;--surface:#000;--ink:#fff;--sub:#fff;--line:#fff;--accent:#fff;--onaccent:#000}
+*{box-sizing:border-box}
+html{scroll-padding-top:var(--bar)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 var(--font);transition:background .2s,color .2s}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* top bar */
+header{position:fixed;top:0;left:0;right:0;z-index:10;height:var(--bar);background:var(--bg);border-bottom:1px solid var(--line);
+display:flex;align-items:center;gap:16px;padding:0 20px}
+nav{display:flex;gap:4px;margin-right:auto}
+nav a,.tool{padding:6px 12px;border-radius:6px;text-decoration:none;font-size:15px;color:var(--sub);background:none;border:0;cursor:pointer;font-family:inherit}
+nav a:hover,.tool:hover{text-decoration:underline;text-underline-offset:4px}
+nav a[aria-current=page]{color:var(--ink);box-shadow:inset 0 -2px var(--accent);border-radius:0}
+.tools{display:flex;gap:2px;align-items:center}
+.tool{padding:6px 8px;font-size:14px}
+.tool[aria-pressed=true]{color:var(--onaccent);background:var(--accent);text-decoration:none}
+.tools .sep{width:1px;height:18px;background:var(--line);margin:0 6px}
+main{padding-top:var(--bar);min-height:100vh}
+.view{display:none}.view.on{display:block}
+.wrap{max-width:1080px;margin:0 auto;padding:40px 20px 80px}
+
+/* home */
+.hero{display:grid;grid-template-columns:4fr 6fr;align-items:stretch;min-height:calc(100vh - var(--bar))}
+.hero .txt{align-self:center;padding:32px 48px 32px 0}
+.photo{position:relative;overflow:hidden;display:grid;place-items:center;background:var(--ink);color:var(--bg);font-size:14px;-webkit-mask-image:linear-gradient(to right,#000 55%,transparent 100%);mask-image:linear-gradient(to right,#000 55%,transparent 100%)}
+.photo img{width:100%;height:100%;object-fit:cover;display:block}
+h1{font:700 clamp(34px,5.5vw,60px)/1.15 var(--font);margin:0 0 8px;letter-spacing:-.01em}
+.kanji{font:400 18px var(--font);color:var(--sub);margin:0 0 32px}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:12px 22px;border-radius:6px;text-decoration:none;font-weight:700;border:1px solid var(--accent);color:var(--accent)}
+.btn.main{background:var(--accent);color:var(--onaccent)}
+.btn:hover{text-decoration:underline;text-underline-offset:4px}
+
+/* projects */
+h2{font:700 28px var(--font);margin:0 0 28px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{display:block;text-decoration:none;background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+a.card:hover{box-shadow:0 0 0 1px var(--line)}
+.thumb{aspect-ratio:16/10;background:var(--bg);border-bottom:1px solid var(--line);display:grid;place-items:center;color:var(--sub);font-size:13px;overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.card .t{padding:14px 16px;font:700 16px var(--font)}
+
+/* detail */
+.back{display:inline-block;margin-bottom:20px;color:var(--sub);text-decoration:none;font-size:15px}
+.back:hover{text-decoration:underline}
+.detail{display:grid;grid-template-columns:7fr 3fr;gap:32px;align-items:start}
+.preview{background:var(--bg);border:1px solid var(--line);border-radius:6px;overflow:hidden;aspect-ratio:16/9;display:grid;place-items:center;color:var(--ink);font-size:14px;text-align:center;padding:16px}
+.preview iframe,.preview video{width:100%;height:100%;border:0;display:block;background:#000}
+.desc h3{font:700 22px/1.4 var(--font);margin:0 0 4px}
+.desc .tag{margin:0 0 8px}
+.desc .role{margin:0 0 16px}
+.desc .note{margin:0;font-size:13px}
+
+/* about */
+.about{max-width:640px}
+.about .name{font:700 34px var(--font);margin:0}
+.about .kanji{margin-bottom:24px}
+.about p{margin:0 0 28px}
+.contact{display:grid;grid-template-columns:auto 1fr;gap:8px 20px;margin:0}
+.contact dt{color:var(--sub)}.contact dd{margin:0;word-break:break-all}
+.contact a{text-underline-offset:3px}
+
+@media(max-width:760px){
+ header{padding:0 12px;gap:6px}
+ nav{margin-right:auto}nav a{padding:6px 8px;font-size:14px}
+ .tool{padding:6px 6px;font-size:13px}.tools .sep{margin:0 3px}
+ .hero{grid-template-columns:1fr;min-height:0}
+ .photo{height:50vh;-webkit-mask-image:linear-gradient(to bottom,#000 55%,transparent 100%);mask-image:linear-gradient(to bottom,#000 55%,transparent 100%)}
+ .hero .txt{text-align:center;padding:0 20px 48px;margin-top:-16px}.btns{justify-content:center}
+ .grid{grid-template-columns:repeat(2,1fr);gap:12px}
+ .detail{grid-template-columns:1fr;gap:20px}
+ .preview{aspect-ratio:3/2}  /* 1.5:1 */
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <nav aria-label="Main">
+    <a href="#home" data-route="home" data-i="nav_home" aria-label="Home"></a>
+    <a href="#projects" data-route="projects" data-i="nav_projects"></a>
+    <a href="#about" data-route="about" data-i="nav_about"></a>
+  </nav>
+  <div class="tools">
+    <button class="tool" data-lang="ko" aria-pressed="false">KO</button>
+    <button class="tool" data-lang="en" aria-pressed="false">EN</button>
+    <button class="tool" data-lang="ja" aria-pressed="false">JA</button>
+    <span class="sep"></span>
+    <button class="tool" id="theme" aria-label="Dark mode">☾</button>
+  </div>
+</header>
+
+<main>
+  <section class="view" id="v-home">
+    <div class="hero">
+      <div class="photo" id="photo"><span data-i="photo_ph"></span></div>
+      <div class="txt">
+        <h1>Euijin Lee</h1>
+        <p class="kanji">李懿津</p>
+        <div class="btns">
+          <a class="btn main" href="#projects" data-i="btn_projects"></a>
+          <a class="btn" href="#about" data-i="btn_about"></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-projects"><div class="wrap">
+    <h2 data-i="nav_projects_title"></h2>
+    <div class="grid" id="grid"></div>
+  </div></section>
+
+  <section class="view" id="v-detail"><div class="wrap">
+    <a class="back" href="#projects" data-i="back"></a>
+    <div class="detail">
+      <div class="preview" id="preview"></div>
+      <div class="desc" id="desc"></div>
+    </div>
+  </div></section>
+
+  <section class="view" id="v-about"><div class="wrap about">
+    <h2 data-i="nav_about_title"></h2>
+    <p class="name">Euijin Lee</p>
+    <p class="kanji">李懿津</p>
+    <p data-i="about_text"></p>
+    <dl class="contact">
+      <dt data-i="c_email"></dt><dd><a href="mailto:nanakofav@gmail.com">nanakofav@gmail.com</a></dd>
+      <dt>Discord</dt><dd>volitioncat</dd>
+      <dt>X/Twitter</dt><dd><a href="https://x.com/volitioncat" target="_blank" rel="noopener">volitioncat</a></dd>
+    </dl>
+  </div></section>
+</main>
+
+<script>
+/* ================= 설정: 파일을 받으면 여기만 채우면 됩니다 ================= */
+const PROFILE_IMG = "";            // 프로필 사진 경로 (예: "assets/profile.jpg")
+const PROJECTS = [
+  {
+    id: "alice-smile", type: "game",
+    thumb: "",                     // 목록 썸네일 (예: "assets/alice-thumb.jpg")
+    src: { ko: "", en: "", ja: "" } // 언어별 게임 html (예: "games/alice-smile/ko/index.html")
+  },
+  {
+    id: "f20", type: "video",
+    thumb: "",
+    src: { ko: "", en: "", ja: "" } // 트레일러 영상 (mp4 경로, 또는 YouTube embed 주소 https://www.youtube.com/embed/...)
+  }
+];
+/* ======================================================================= */
+
+const I18N = {
+ ko:{nav_home:"⌂",nav_projects:"작업물",nav_about:"정보",nav_projects_title:"작업물",nav_about_title:"정보",
+  btn_projects:"작업물 보기",btn_about:"정보와 연락처",photo_ph:"프로필 사진",back:"← 작업물 목록",c_email:"이메일",
+  about_text:"스토리 기획 및 시나리오 집필 작업을 하고 있습니다.\n현재 진행 중인 프로젝트 또는 기타 문의에 대해서는 아래로 연락해주세요.",
+  preview_ph:"여기에 미리보기가 들어갑니다",
+  p:{"alice-smile":{title:"팬메이드 웹게임 <앨리스 스마일>",tag:"프로젝트 세카이 팬 창작 웹게임",role:"기획 및 시나리오, 일러스트 원안 담당",note:"코딩과 일러스트 편집 등에서 AI 사용함"},
+     "f20":{title:"공포 쯔꾸르 RPG <F20>",tag:"심리 호러 스토리텔링 쯔꾸르 RPG",role:"기획 및 시나리오, 캐릭터 디자인 담당",note:"현재 데모 제작 중 (2025~)"}}},
+ en:{nav_home:"Home",nav_projects:"Projects&Works",nav_about:"About me&Contacts",nav_projects_title:"Projects&Works",nav_about_title:"About me&Contacts",
+  btn_projects:"See my Projects&Works",btn_about:"About me&Contact",photo_ph:"Profile photo",back:"← Projects&Works",c_email:"Email",
+  about_text:"Story directing&Game Writer\nFor more information about my current project or other things, please contact with the below methods.",
+  preview_ph:"Preview goes here",
+  p:{"alice-smile":{title:"Fanmade game <Alice Smile>",tag:"Project Sekai fanmade web game",role:"Directing, Scenario writing, Art draft&Concept art",note:"Announce: AI is used in some programming and editing process."},
+     "f20":{title:"Horror Adventure RPG <F20>",tag:"Psychological horror&Storytelling RPG maker game",role:"Main directing, Scenario writing, Character design",note:"Currently working on demo version (2025~)"}}},
+ ja:{nav_home:"ホーム",nav_projects:"プロジェクト",nav_about:"問い合わせ",nav_projects_title:"プロジェクト",nav_about_title:"問い合わせ",
+  btn_projects:"プロジェクトを見る",btn_about:"お問い合わせを見る",photo_ph:"プロフィール写真",back:"← プロジェクト",c_email:"メール",
+  about_text:"ストーリー企画、シナリオ制作します。\n現在のプロジェクトや他のお問い合わせは以下の連絡先でお願いします。",
+  preview_ph:"ここにプレビューが入ります",
+  p:{"alice-smile":{title:"同人ウェブゲーム <アリス・スマイル>",tag:"プロジェクトセカイカラフルステージ！の同人ウェブゲーム",role:"企画、シナリオ、イラスト原案担当",note:"お知らせ：開発とイラスト編集作業などにAIを使用しました。"},
+     "f20":{title:"ホラーRPGゲーム <F20>",tag:"心理的ホラー、ストーリー重視、RPG maker ゲーム",role:"企画、シナリオ、キャラデザ担当",note:"現在、デモ版制作中（2025〜）"}}}
+};
+
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+let lang = store.get("lang") || ({ko:"ko",ja:"ja"}[(navigator.language||"").slice(0,2)] || "en");
+let theme = store.get("theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+
+function applyTheme(){
+  document.documentElement.dataset.theme=theme;
+  $("#theme").textContent = theme==="dark" ? "☀" : "☾";
+  $("#theme").setAttribute("aria-pressed", theme==="dark");
+}
+function applyLang(){
+  const t=I18N[lang];
+  document.documentElement.lang=lang;
+  $$("[data-i]").forEach(el=>{el.textContent=t[el.dataset.i]; if(el.dataset.i==="about_text") el.style.whiteSpace="pre-line";});
+  $$("[data-lang]").forEach(b=>b.setAttribute("aria-pressed", b.dataset.lang===lang));
+  $("#photo").innerHTML = PROFILE_IMG ? `<img src="${esc(PROFILE_IMG)}" alt="Euijin Lee">` : `<span>${t.photo_ph}</span>`;
+  renderGrid(); route(current);
+}
+
+function renderGrid(){
+  const t=I18N[lang]; let h="";
+  PROJECTS.forEach(p=>{
+    h+=`<a class="card" href="#project/${p.id}"><div class="thumb">${p.thumb?`<img src="${esc(p.thumb)}" alt="">`:""}</div><div class="t">${esc(t.p[p.id].title)}</div></a>`;
+  });
+  $("#grid").innerHTML=h;
+}
+
+function renderDetail(id){
+  const p=PROJECTS.find(x=>x.id===id); if(!p) return go("projects");
+  const t=I18N[lang], d=t.p[id], src=p.src[lang]||p.src.ko||"";
+  const pv=$("#preview");
+  if(!src) pv.textContent=t.preview_ph;
+  else if(p.type==="video" && /\.(mp4|webm)$/i.test(src)) pv.innerHTML=`<video src="${esc(src)}" controls playsinline></video>`;
+  else pv.innerHTML=`<iframe src="${esc(src)}" title="${esc(d.title)}" allow="fullscreen; autoplay" allowfullscreen loading="lazy"></iframe>`;
+  $("#desc").innerHTML=`<h3>${esc(d.title)}</h3><p class="tag">${esc(d.tag)}</p><p class="role">${esc(d.role)}</p><p class="note">${esc(d.note)}</p>`;
+}
+
+function route(h){
+  h=(h!==undefined?h:(location.hash||"#home")).replace(/^#/,"");
+  const [page,arg]=h.split("/");
+  const view = page==="project" ? "detail" : (["home","projects","about"].includes(page)?page:"home");
+  const cur = view==="detail" ? "projects" : view;
+  $$(".view").forEach(v=>v.classList.toggle("on", v.id==="v-"+view));
+  $$("nav a").forEach(a=>{ if(a.dataset.route===cur) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
+  current=h;
+  if(view==="detail") renderDetail(arg);
+  window.scrollTo(0,0);
+}
+let current="home";
+function go(h){
+  try{ if(location.hash!=="#"+h) history.pushState(null,"","#"+h); }catch(e){}
+  route(h);
+}
+document.addEventListener("click",e=>{
+  const a=e.target.closest('a[href^="#"]'); if(!a) return;
+  e.preventDefault(); go(a.getAttribute("href").slice(1));
+});
+
+$$("[data-lang]").forEach(b=>b.onclick=()=>{lang=b.dataset.lang;store.set("lang",lang);applyLang();});
+$("#theme").onclick=()=>{theme=theme==="dark"?"light":"dark";store.set("theme",theme);applyTheme();};
+addEventListener("popstate",()=>route());
+addEventListener("hashchange",()=>{ if((location.hash||"#home").slice(1)!==current) route(); });
+current=(location.hash||"#home").slice(1); applyTheme(); applyLang();
+</script>
+</body>
+</html>
