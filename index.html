@@ -149,17 +149,21 @@ a.card:hover{box-shadow:0 0 0 1px var(--line)}
 
 <script>
 /* ================= 설정: 파일을 받으면 여기만 채우면 됩니다 ================= */
-const PROFILE_IMG = "";            // 프로필 사진 경로 (예: "assets/profile.jpg")
+const PROFILE_IMG = "assets/profile.jpg";   // 프로필 사진
 const PROJECTS = [
   {
     id: "alice-smile", type: "game",
-    thumb: "",                     // 목록 썸네일 (예: "assets/alice-thumb.jpg")
-    src: { ko: "", en: "", ja: "" } // 언어별 게임 html (예: "games/alice-smile/ko/index.html")
+    thumb: "assets/alice_tbn.jpg",
+    src: { ko: "games/alice-smile-ko/index.html",
+           en: "games/alice-smile-en/index.html",
+           ja: "games/alice-smile-ja/index.html" }
   },
   {
     id: "f20", type: "video",
-    thumb: "",
-    src: { ko: "", en: "", ja: "" } // 트레일러 영상 (mp4 경로, 또는 YouTube embed 주소 https://www.youtube.com/embed/...)
+    thumb: "assets/f20_tbn.jpg",
+    src: { ko: "assets/f20_trailer.mp4",
+           en: "assets/f20_trailer.mp4",
+           ja: "assets/f20_trailer.mp4" }
   }
 ];
 /* ======================================================================= */
@@ -219,7 +223,7 @@ function renderDetail(id){
   const t=I18N[lang], d=t.p[id], src=p.src[lang]||p.src.ko||"";
   const pv=$("#preview");
   if(!src) pv.textContent=t.preview_ph;
-  else if(p.type==="video" && /\.(mp4|webm)$/i.test(src)) pv.innerHTML=`<video src="${esc(src)}" controls playsinline></video>`;
+  else if(p.type==="video" && /\.(mp4|webm)$/i.test(src)) pv.innerHTML=`<video src="${esc(src)}" controls playsinline preload="metadata"></video>`;
   else pv.innerHTML=`<iframe src="${esc(src)}" title="${esc(d.title)}" allow="fullscreen; autoplay" allowfullscreen loading="lazy"></iframe>`;
   $("#desc").innerHTML=`<h3>${esc(d.title)}</h3><p class="tag">${esc(d.tag)}</p><p class="role">${esc(d.role)}</p><p class="note">${esc(d.note)}</p>`;
 }
